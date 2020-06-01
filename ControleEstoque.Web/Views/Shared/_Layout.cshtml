@@ -77,18 +77,17 @@
                             </ul>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink("Sobre", "Sobre", "Home")</li>
-                        <li> <a href="#"> Olá @User.Identity.Name </a> </li>
-                            @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { @id = "LogOffForm" }))
-                            {
-                            <li class="item">
-                                <a href="javascript:document.getElementbyId('LogOffForm').Submit">Sair</a>
-                            </li>
-                        }
-                    </ul>
+                    @using (Html.BeginForm("LogOff", "Conta", FormMethod.Post, new { @id = "LogOffForm" }))
+                    {
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>@Html.ActionLink("Sobre", "Sobre", "Home")</li>
+                            <li> <a href="#"> Olá @User.Identity.Name </a> </li>
+
+                            <li><a href="javascript:document.getElementById('LogOffForm').submit()">Sair</a></li>
+                        </ul>
+                    }
                 </div>
-            }
+             }
         </div>
     </div>
     <div class="container body-content">
@@ -98,7 +97,6 @@
             <p>&copy; @DateTime.Now.Year - Controle de Estoque</p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

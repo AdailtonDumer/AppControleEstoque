@@ -5,21 +5,25 @@
 
 <div class="container">
     <div class="row">
-        <h3>Entrar no sistema</h3>
+        <h2>Entrar no sistema</h2>
     </div>
     <div class="row">
         @using (Html.BeginForm("Login", "Conta", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "Form" }))
         {
             @Html.ValidationSummary(true, "", new { @class = "text-danger"})
             <div class="form-group">
-                @Html.LabelFor(m => m.Usuario, new { @class = "form-label col-md-2" })
-                @Html.TextBoxFor(m => m.Usuario, new { @class = " form-control" })
-                @Html.ValidationMessageFor(m => m.Usuario, "" ,new { @class = "text-danger"})
+                @Html.LabelFor(m => m.Usuario, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Usuario, new { @class = " form-control" })
+                    @Html.ValidationMessageFor(m => m.Usuario, "" ,new { @class = "text-danger"})
+                </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Senha, new { @class = "form-label col-md-2" })
-                @Html.PasswordFor(m => m.Senha, new { @class = " form-control" })
-                @Html.ValidationMessageFor(m => m.Senha,"",new { @class = "text-danger"})
+                @Html.LabelFor(m => m.Senha, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Senha, new { @class = " form-control" })
+                    @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+                </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10 col-md-offset-2">

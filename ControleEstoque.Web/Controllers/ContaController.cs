@@ -1,5 +1,4 @@
 ﻿using ControleEstoque.Web.Models;
-using System.Web.ModelBinding;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -43,6 +42,14 @@ namespace ControleEstoque.Web.Controllers
 
             return View(login);
             
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult LogOff()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
