@@ -1,7 +1,7 @@
 ﻿using ControleEstoque.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 
 namespace ControleEstoque.Web.Controllers
@@ -50,21 +50,38 @@ namespace ControleEstoque.Web.Controllers
         [Authorize]
         public ActionResult SalvarGrupoProduto(GrupoProdutoModel model)
         {
-            var grupoproduto = _listaGrupoProduto.Find(x => x.Id == model.Id);
-
-            if(grupoproduto == null)
+            var resultado = "OK";
+            var mensagens = new List<string>();
+            var idSalvo = string.Empty;
+            if (!ModelState.IsValid)
             {
-                grupoproduto = model;
-                grupoproduto.Id = _listaGrupoProduto.Max(x => x.Id) + 1;
-                _listaGrupoProduto.Add(grupoproduto);
+                resultado = "AVISO";
+                mensagens = ModelState.Values.SelectMany(m => m.Errors).Select(m => m.ErrorMessage).ToList();
             }
             else
             {
-                grupoproduto.Nome = model.Nome;
-                grupoproduto.Ativo = model.Ativo;
-            }
+                try
+                {
+                    var grupoproduto = _listaGrupoProduto.Find(x => x.Id == model.Id);
 
-            return Json(grupoproduto);
+                    if (grupoproduto == null)
+                    {
+                        grupoproduto = model;
+                        grupoproduto.Id = _listaGrupoProduto.Max(x => x.Id) + 1;
+                        _listaGrupoProduto.Add(grupoproduto);
+                    }
+                    else
+                    {
+                        grupoproduto.Nome = model.Nome;
+                        grupoproduto.Ativo = model.Ativo;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    resultado = "ERRO";
+                }   
+            }
+            return Json(new { Resultado = resultado, Mensagens = mensagens, IdSalvo = idSalvo});
         }
 
         #endregion

@@ -198,14 +198,17 @@
                     Ativo: $('#cbx_ativo').prop('checked')
                 }
             $.post(url, param, function (response) {
-                if (response) {
+
+                if (response.Resultado == "OK") {
+
                     if (param.Id == 0) {
+                        param.Id = response.IdSalvo;
                         var table = $('#grid_cadastro').find('tbody'),
-                            linha = criaLinha(response)
+                            linha = criaLinha(param)
 
                         table.append(linha)
                     } else {
-                        var linha = $('#grid_cadastro').find(`tr[data-id = ${param.Id}}`).find('td')
+                        var linha = $('#grid_cadastro').find(`tr[data-id = ${param.Id}]`).find('td')
                         linha
                             .eq(0).html(param.Nome).end()
                             .eq(1).html(param.Ativo ? 'SIM' : 'Não')
